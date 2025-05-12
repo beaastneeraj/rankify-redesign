@@ -59,9 +59,9 @@ const Footer = () => {
     {
       title: "Legal",
       links: [
-        { name: "Privacy Policy", href: "/privacy" },
+        { name: "Privacy Policy", href: "/privacy-policy" },
         { name: "Terms of Service", href: "/terms" },
-        { name: "Cookie Policy", href: "/cookies" },
+        { name: "Cookie Policy", href: "/cookie-policy" },
       ],
     },
   ]
@@ -179,13 +179,13 @@ const Footer = () => {
         <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">&copy; {year ? year : ""} Rankify. All rights reserved.</p>
           <div className="flex space-x-6 text-sm text-gray-400">
-            <Link href="/privacy" className="hover:text-indigo-400 transition-colors duration-200">
+            <Link href="/privacy-policy" className="hover:text-indigo-400 transition-colors duration-200">
               Privacy Policy
             </Link>
             <Link href="/terms" className="hover:text-indigo-400 transition-colors duration-200">
               Terms of Service
             </Link>
-            <Link href="/cookies" className="hover:text-indigo-400 transition-colors duration-200">
+            <Link href="/cookie-policy" className="hover:text-indigo-400 transition-colors duration-200">
               Cookie Policy
             </Link>
           </div>

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { FileText, Download, Search, Filter, Calendar, Eye } from "lucide-react"
+import { FaChalkboardTeacher, FaFlask, FaGraduationCap, FaUsers, FaStar, FaCogs, FaSlidersH, FaUniversity, FaUserShield, FaCloudUploadAlt, FaCode, FaQuestionCircle, FaRegCheckCircle } from 'react-icons/fa';
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -106,272 +107,138 @@ const categories = [
   { value: "technical", label: "Technical" },
 ]
 
-export default function DocumentsPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [activeCategory, setActiveCategory] = useState("all")
-  const [activeTab, setActiveTab] = useState("all")
-  const [sortBy, setSortBy] = useState("date")
-
-  // Filter documents based on search query, category, and tab
-  const filteredDocuments = documents.filter((doc) => {
-    const matchesSearch =
-      searchQuery === "" ||
-      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.description.toLowerCase().includes(searchQuery.toLowerCase())
-
-    const matchesCategory = activeCategory === "all" || doc.category === activeCategory
-
-    return matchesSearch && matchesCategory
-  })
-
-  // Sort documents
-  const sortedDocuments = [...filteredDocuments].sort((a, b) => {
-    if (sortBy === "date") {
-      return new Date(b.date).getTime() - new Date(a.date).getTime()
-    } else if (sortBy === "views") {
-      return b.views - a.views
-    } else if (sortBy === "title") {
-      return a.title.localeCompare(b.title)
-    }
-    return 0
-  })
-
-  // Format date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).format(date)
-  }
-
+function Section({ icon, title, children }: { icon: React.ReactNode, title: string, children: React.ReactNode }) {
   return (
-    <div className="container px-4 md:px-6 py-8 md:py-12 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Documents</h1>
-          <p className="text-muted-foreground mt-1">
-            Access methodology guides, technical documentation, and research papers
-          </p>
-        </div>
+    <section className="mb-10">
+      <div className="flex items-center mb-3">
+        <span className="text-primary text-2xl mr-2">{icon}</span>
+        <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
       </div>
-
-      <div className="flex flex-col md:flex-row gap-6 mb-8">
-        <div className="relative w-full md:w-2/3">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search documents..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
-          />
-        </div>
-        <div className="flex items-center gap-2 w-full md:w-1/3">
-          <div className="w-full">
-            <Select value={activeCategory} onValueChange={setActiveCategory}>
-              <SelectTrigger>
-                <div className="flex items-center">
-                  <Filter className="mr-2 h-4 w-4" />
-                  <SelectValue placeholder="Filter by category" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((category) => (
-                  <SelectItem key={category.value} value={category.value}>
-                    {category.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="w-full">
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger>
-                <div className="flex items-center">
-                  <Calendar className="mr-2 h-4 w-4" />
-                  <SelectValue placeholder="Sort by" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="date">Newest First</SelectItem>
-                <SelectItem value="views">Most Viewed</SelectItem>
-                <SelectItem value="title">Alphabetical</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+      <div className="pl-8 border-l-4 border-primary/20 bg-muted/40 rounded-md py-3">
+        {children}
       </div>
+    </section>
+  );
+}
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
-          <TabsTrigger value="all">All Documents</TabsTrigger>
-          <TabsTrigger value="recent">Recently Added</TabsTrigger>
-          <TabsTrigger value="popular">Most Popular</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedDocuments.length > 0 ? (
-              sortedDocuments.map((doc, index) => (
-                <motion.div
-                  key={doc.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                >
-                  <Card className="h-full flex flex-col">
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start">
-                        <Badge variant="outline" className="mb-2">
-                          {doc.category.charAt(0).toUpperCase() + doc.category.slice(1)}
-                        </Badge>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <Eye className="h-3 w-3 mr-1" />
-                          {doc.views}
-                        </div>
-                      </div>
-                      <CardTitle className="text-lg">{doc.title}</CardTitle>
-                      <CardDescription className="line-clamp-2">{doc.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pb-3 pt-0">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-3.5 w-3.5 mr-1" />
-                        {formatDate(doc.date)}
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground mt-1">
-                        <FileText className="h-3.5 w-3.5 mr-1" />
-                        {doc.type.toUpperCase()} • {doc.size}
-                      </div>
-                    </CardContent>
-                    <CardFooter className="pt-3 mt-auto">
-                      <Button variant="outline" className="w-full" asChild>
-                        <a href="#" onClick={(e) => e.preventDefault()}>
-                          <Download className="mr-2 h-4 w-4" />
-                          Download
-                        </a>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-                <h3 className="text-lg font-medium mb-2">No documents found</h3>
-                <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
-                <Button
-                  variant="link"
-                  onClick={() => {
-                    setSearchQuery("")
-                    setActiveCategory("all")
-                  }}
-                  className="mt-2"
-                >
-                  Clear filters
-                </Button>
-              </div>
-            )}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="recent" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedDocuments
-              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-              .slice(0, 6)
-              .map((doc, index) => (
-                <motion.div
-                  key={doc.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                >
-                  <Card className="h-full flex flex-col">
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start">
-                        <Badge variant="outline" className="mb-2">
-                          {doc.category.charAt(0).toUpperCase() + doc.category.slice(1)}
-                        </Badge>
-                        <Badge variant="secondary">New</Badge>
-                      </div>
-                      <CardTitle className="text-lg">{doc.title}</CardTitle>
-                      <CardDescription className="line-clamp-2">{doc.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pb-3 pt-0">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-3.5 w-3.5 mr-1" />
-                        {formatDate(doc.date)}
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground mt-1">
-                        <FileText className="h-3.5 w-3.5 mr-1" />
-                        {doc.type.toUpperCase()} • {doc.size}
-                      </div>
-                    </CardContent>
-                    <CardFooter className="pt-3 mt-auto">
-                      <Button variant="outline" className="w-full" asChild>
-                        <a href="#" onClick={(e) => e.preventDefault()}>
-                          <Download className="mr-2 h-4 w-4" />
-                          Download
-                        </a>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="popular" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedDocuments
-              .sort((a, b) => b.views - a.views)
-              .slice(0, 6)
-              .map((doc, index) => (
-                <motion.div
-                  key={doc.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                >
-                  <Card className="h-full flex flex-col">
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start">
-                        <Badge variant="outline" className="mb-2">
-                          {doc.category.charAt(0).toUpperCase() + doc.category.slice(1)}
-                        </Badge>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <Eye className="h-3 w-3 mr-1" />
-                          {doc.views}
-                        </div>
-                      </div>
-                      <CardTitle className="text-lg">{doc.title}</CardTitle>
-                      <CardDescription className="line-clamp-2">{doc.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pb-3 pt-0">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-3.5 w-3.5 mr-1" />
-                        {formatDate(doc.date)}
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground mt-1">
-                        <FileText className="h-3.5 w-3.5 mr-1" />
-                        {doc.type.toUpperCase()} • {doc.size}
-                      </div>
-                    </CardContent>
-                    <CardFooter className="pt-3 mt-auto">
-                      <Button variant="outline" className="w-full" asChild>
-                        <a href="#" onClick={(e) => e.preventDefault()}>
-                          <Download className="mr-2 h-4 w-4" />
-                          Download
-                        </a>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+function ParameterCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+  return (
+    <div className="flex items-start gap-3 bg-white/80 dark:bg-zinc-900/80 rounded-lg shadow p-4 border border-muted mb-3">
+      <span className="text-xl text-primary mt-1">{icon}</span>
+      <div>
+        <div className="font-semibold text-lg">{title}</div>
+        <div className="text-sm text-muted-foreground leading-relaxed">{description}</div>
+      </div>
     </div>
-  )
+  );
+}
+
+function DocumentationContent() {
+  return (
+    <div className="container mx-auto px-4 py-10 max-w-3xl">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-extrabold mb-2 tracking-tight bg-gradient-to-r from-primary to-blue-500 text-transparent bg-clip-text">Rankify Documentation</h1>
+        <p className="text-lg text-muted-foreground">A transparent, customizable, and data-driven ranking platform for Indian institutions.</p>
+      </div>
+      <Section icon={<FaCogs />} title="Overview">
+        <p>
+          <b>Rankify</b> is a modern platform for exploring, customizing, and comparing institutional rankings in India. Powered by official NIRF datasets, it lets you analyze, filter, and personalize rankings with full transparency and beautiful visualizations.
+        </p>
+      </Section>
+      <Section icon={<FaSlidersH />} title="Ranking Parameters Explained">
+        <p className="mb-4">
+          Institutions are evaluated on five core parameters. Default weights follow NIRF methodology, but you can customize them on the Parameters page.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <ParameterCard icon={<FaChalkboardTeacher />} title="TLR (Teaching, Learning & Resources)" description="Faculty-student ratio, faculty qualifications, infrastructure, and resources. High TLR = strong teaching quality and support." />
+          <ParameterCard icon={<FaFlask />} title="RPP (Research & Professional Practice)" description="Research output, publications, patents, projects, and industry engagement. High RPP = strong research culture." />
+          <ParameterCard icon={<FaGraduationCap />} title="GO (Graduation Outcomes)" description="Student performance, placements, higher studies, entrepreneurship, and salaries. High GO = better student outcomes." />
+          <ParameterCard icon={<FaUsers />} title="OI (Outreach & Inclusivity)" description="Diversity, outreach, and representation of disadvantaged groups. High OI = more inclusive and diverse campus." />
+          <ParameterCard icon={<FaStar />} title="Perception (PR)" description="Peer, employer, and public perception. High PR = strong reputation and trust." />
+        </div>
+        <div className="mb-2">
+          <b>Default Weights (NIRF 2024):</b> <span className="text-primary">TLR: 30%</span>, <span className="text-primary">RPP: 30%</span>, <span className="text-primary">GO: 20%</span>, <span className="text-primary">OI: 10%</span>, <span className="text-primary">Perception: 10%</span>
+        </div>
+        <div className="mb-2">
+          <b>Allowed Ranges:</b>
+          <ul className="list-disc ml-6">
+            <li>TLR: 10% - 60%</li>
+            <li>RPP: 5% - 50%</li>
+            <li>GO: 5% - 50%</li>
+            <li>OI: 5% - 20%</li>
+            <li>Perception: 5% - 20%</li>
+          </ul>
+        </div>
+      </Section>
+      <Section icon={<FaRegCheckCircle />} title="Ranking Formula">
+        <p className="mb-2">
+          The overall score is a weighted sum of the five parameters:
+        </p>
+        <pre className="p-0 bg-transparent text-base mb-2 border-0 shadow-none">
+{`Score =
+  (TLR × (TLR_weight / Total_weight)) +
+  (RPP × (RPP_weight / Total_weight)) +
+  (GO × (GO_weight / Total_weight)) +
+  (OI × (OI_weight / Total_weight)) +
+  (Perception × (Perception_weight / Total_weight))
+`}
+        </pre>
+        <div className="text-sm text-muted-foreground mb-2">
+          <b>Example:</b> If TLR=80, RPP=60, GO=70, OI=50, Perception=40, and default weights:<br />
+          <span className="font-mono">(80×0.3) + (60×0.3) + (70×0.2) + (50×0.1) + (40×0.1) = 65</span>
+        </div>
+      </Section>
+      <Section icon={<FaUniversity />} title="Ranking Page">
+        <ul className="list-disc ml-6">
+          <li>Browse official rankings by category and year.</li>
+          <li>Filter by region, state, or search by name/city.</li>
+          <li>Sort by rank, score, or institution name.</li>
+          <li>Export the current view as CSV.</li>
+          <li>Click an institution for details and report.</li>
+        </ul>
+      </Section>
+      <Section icon={<FaSlidersH />} title="Parameters Page">
+        <ul className="list-disc ml-6">
+          <li>Adjust weights for each parameter using sliders.</li>
+          <li>Click "Update Rankings" to recalculate scores and ranks.</li>
+          <li>Compare up to 3 institutions side-by-side.</li>
+          <li>Export your custom rankings as CSV.</li>
+        </ul>
+      </Section>
+      <Section icon={<FaChalkboardTeacher />} title="Institution Details">
+        <ul className="list-disc ml-6">
+          <li>Click any institution name to view its profile.</li>
+          <li>See detailed scores, city/state, and download the official report.</li>
+        </ul>
+      </Section>
+      <Section icon={<FaUserShield />} title="Authentication">
+        <ul className="list-disc ml-6">
+          <li>Sign up or log in to save preferences and compare lists.</li>
+          <li>Reset your password via email if needed.</li>
+        </ul>
+      </Section>
+      <Section icon={<FaCloudUploadAlt />} title="Data Upload (Admin)">
+        <ul className="list-disc ml-6">
+          <li>Admins can upload new ranking datasets via CSV.</li>
+          <li>Uploaded data is validated and stored in the database.</li>
+        </ul>
+      </Section>
+      <Section icon={<FaCode />} title="API">
+        <ul className="list-disc ml-6">
+          <li>Public API endpoints for fetching rankings and institution data.</li>
+          <li>Supports filtering, parameter customization, and region/state queries.</li>
+        </ul>
+      </Section>
+      <Section icon={<FaQuestionCircle />} title="Support & Feedback">
+        <ul className="list-disc ml-6">
+          <li>Visit the FAQ or contact page for help.</li>
+          <li>Feedback and suggestions are welcome!</li>
+        </ul>
+      </Section>
+    </div>
+  );
+}
+
+export default function DocumentsPage() {
+  return <DocumentationContent />;
 }
