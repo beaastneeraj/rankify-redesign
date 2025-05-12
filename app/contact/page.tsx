@@ -227,7 +227,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-medium">Phone</h3>
-                      <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                      <p className="text-muted-foreground">+91 9313040889</p>
                       <p className="text-muted-foreground">Mon-Fri, 9:00 AM - 6:00 PM</p>
                     </div>
                   </motion.div>
@@ -239,11 +239,9 @@ export default function ContactPage() {
                     <div>
                       <h3 className="text-lg font-medium">Address</h3>
                       <p className="text-muted-foreground">
-                        123 Ranking Street
+                        IIT Ropar, Rupnagar, Punjab - 140001
                         <br />
-                        Data City, AN 10010
-                        <br />
-                        United States
+                        India
                       </p>
                     </div>
                   </motion.div>
@@ -294,15 +292,17 @@ export default function ContactPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="rounded-xl overflow-hidden shadow-xl h-[400px] bg-card"
+            className="rounded-xl overflow-hidden shadow-xl h-[450px] bg-card"
           >
-            {/* Replace with actual map implementation */}
-            <div className="w-full h-full flex items-center justify-center bg-primary/5">
-              <div className="text-center">
-                <MapPin className="h-12 w-12 text-primary/60 mx-auto mb-4" />
-                <p className="text-muted-foreground">Interactive Map Would Be Displayed Here</p>
-              </div>
-            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30773064.05684503!2d61.04182762828652!3d19.69228278198373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3905542fe45e58f7%3A0x5d16c2617cfdbdb8!2sIndian%20Institute%20Of%20Technology%E2%80%93Ropar%20(IIT%E2%80%93Ropar)!5e0!3m2!1sen!2sin!4v1747074658383!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </motion.div>
         </div>
       </section>

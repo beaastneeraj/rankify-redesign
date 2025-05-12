@@ -158,7 +158,7 @@ const Footer = () => {
             <Phone className="h-5 w-5 text-indigo-400 mt-1 mr-3" />
             <div>
               <h4 className="text-sm font-medium text-white">Phone</h4>
-              <p className="text-gray-400">+91 123 456 7890</p>
+              <p className="text-gray-400">+91 9313040889</p>
             </div>
           </div>
 
@@ -167,9 +167,7 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-medium text-white">Address</h4>
               <p className="text-gray-400">
-                123 Education Street, Tech Park
-                <br />
-                Bangalore, Karnataka 560001
+                IIT Ropar, Rupnagar, Punjab - 140001
               </p>
             </div>
           </div>
