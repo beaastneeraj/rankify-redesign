@@ -41,82 +41,83 @@ export function DynamicParameterSlider({
   }, [value, totalWeight])
 
   return (
-    <div
-      className="space-y-2 mb-6 relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <h4 className="text-sm font-medium">{name}</h4>
-          {description && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Info className="h-4 w-4 ml-1.5 text-muted-foreground" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs">{description}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </div>
-        <AnimatePresence>
-          {isHovered ? (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center space-x-2"
-            >
-              <Badge variant="outline" className="text-xs">
-                {min}
-              </Badge>
-              <Badge variant="outline" className="text-xs">
-                {max}
-              </Badge>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Badge
-                variant={value > (max - min) / 2 + min ? "default" : "outline"}
-                className={cn(
-                  "transition-all",
-                  value > (max - min) / 2 + min ? "bg-primary text-primary-foreground" : "",
-                )}
+    <>
+      <div
+        className="space-y-2 mb-6 relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <h4 className="text-sm font-medium">{name}</h4>
+            {description && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4 ml-1.5 text-muted-foreground" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs">{description}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
+          <AnimatePresence>
+            {isHovered ? (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center space-x-2"
               >
-                {value}%
-              </Badge>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+                <Badge variant="outline" className="text-xs">
+                  {min}
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  {max}
+                </Badge>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Badge
+                  variant={value > (max - min) / 2 + min ? "default" : "outline"}
+                  className={cn(
+                    "transition-all",
+                    value > (max - min) / 2 + min ? "bg-primary text-primary-foreground" : "",
+                  )}
+                >
+                  {value}%
+                </Badge>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-      <div className="relative flex items-center">
-        <motion.div
-          className="relative"
-          initial={{ width: "100%" }}
-          animate={{ width: sliderWidth }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
+        <div className="relative w-full h-6 flex items-center">
+          <motion.div
+            className="absolute left-0 top-1/2 -translate-y-1/2 h-2 bg-primary/20 rounded-full z-0"
+            animate={{ width: sliderWidth }}
+            transition={{ type: "spring", stiffness: 80, damping: 24 }}
+          />
           <Slider
-            value={[value]}
+            id={name}
             min={min}
             max={max}
             step={1}
+            value={[value]}
             onValueChange={(newValue) => onChange(newValue[0])}
-            className="w-full"
+            className="w-full z-10"
           />
-        </motion.div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-muted-foreground/30" />
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-muted-foreground/30" />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

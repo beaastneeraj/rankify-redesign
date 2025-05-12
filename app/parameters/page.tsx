@@ -165,9 +165,26 @@ export default function ParametersPage() {
     setWeights(newWeights)
   }
 
-  // Reset to default weights
-  const resetToDefault = () => {
+  // Reset to default weights and reload original rankings
+  const resetToDefault = async () => {
     setWeights({ ...DEFAULT_WEIGHTS })
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/rankings?category=${category}&year=${year}`)
+      const json = await res.json()
+      // Add originalScore and originalRank for recalculation
+      const data: InstitutionWithCalc[] = (json.data || []).map((inst: Institution, idx: number) => ({
+        ...inst,
+        originalScore: inst.score,
+        originalRank: inst.rank,
+        calculatedScore: undefined,
+        newRank: undefined,
+      }))
+      setInstitutions(data)
+    } catch (e) {
+      setInstitutions([])
+    }
+    setLoading(false)
   }
 
   // Update rankings based on parameters
