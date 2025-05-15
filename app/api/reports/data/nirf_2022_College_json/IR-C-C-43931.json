@@ -1,0 +1,332 @@
+{
+  "tables": [
+    {
+      "page": 1,
+      "index": 1,
+      "headers": [
+        "academic_year",
+        "2020_21",
+        "2019_20",
+        "2018_19",
+        "2017_18",
+        "2016_17",
+        "2015_16"
+      ],
+      "data": [
+        {
+          "academic_year": 3,
+          "2020_21": 1690,
+          "2019_20": 1650,
+          "2018_19": 1611,
+          "2017_18": null,
+          "2016_17": null,
+          "2015_16": null
+        },
+        {
+          "academic_year": 4,
+          "2020_21": 70,
+          "2019_20": 70,
+          "2018_19": 70,
+          "2017_18": 80,
+          "2016_17": null,
+          "2015_16": null
+        },
+        {
+          "academic_year": 2,
+          "2020_21": 444,
+          "2019_20": 361,
+          "2018_19": null,
+          "2017_18": null,
+          "2016_17": null,
+          "2015_16": null
+        }
+      ]
+    },
+    {
+      "page": 1,
+      "index": 2,
+      "headers": [
+        "all_programs_of_all_years",
+        "no_of_male_students",
+        "no_of_female_students",
+        "total_students",
+        "within_state_including_male_female",
+        "outside_state_including_male_female",
+        "outside_country_including_male_female",
+        "economically_backward_including_male_female",
+        "socially_challenged_sc_st_obc_including_male_female",
+        "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government",
+        "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds",
+        "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies",
+        "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement"
+      ],
+      "data": [
+        {
+          "all_programs_of_all_years": 3,
+          "no_of_male_students": 0,
+          "no_of_female_students": 4762,
+          "total_students": 4762,
+          "within_state_including_male_female": 3587,
+          "outside_state_including_male_female": 1168,
+          "outside_country_including_male_female": 7,
+          "economically_backward_including_male_female": 544,
+          "socially_challenged_sc_st_obc_including_male_female": 3617,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 1892,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 423,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 36,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 1810
+        },
+        {
+          "all_programs_of_all_years": 4,
+          "no_of_male_students": 0,
+          "no_of_female_students": 256,
+          "total_students": 256,
+          "within_state_including_male_female": 154,
+          "outside_state_including_male_female": 100,
+          "outside_country_including_male_female": 2,
+          "economically_backward_including_male_female": 55,
+          "socially_challenged_sc_st_obc_including_male_female": 145,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 194,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 1,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 5
+        },
+        {
+          "all_programs_of_all_years": 2,
+          "no_of_male_students": 0,
+          "no_of_female_students": 805,
+          "total_students": 805,
+          "within_state_including_male_female": 534,
+          "outside_state_including_male_female": 270,
+          "outside_country_including_male_female": 1,
+          "economically_backward_including_male_female": 114,
+          "socially_challenged_sc_st_obc_including_male_female": 552,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 57,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 70,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 10,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 529
+        }
+      ]
+    },
+    {
+      "page": 1,
+      "index": 3,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2016,
+          "no_of_first_year_students_intake_in_the_year": 1676,
+          "no_of_first_year_students_admitted_in_the_year": 1533,
+          "academic_year_2": 2018,
+          "no_of_students_graduating_in_minimum_stipulated_time": 1281,
+          "no_of_students_placed": 28,
+          "median_salary_of_placed_graduates_amount_in_rs": 184000,
+          "no_of_students_selected_for_higher_studies": 0
+        },
+        {
+          "academic_year": 2017,
+          "no_of_first_year_students_intake_in_the_year": 1654,
+          "no_of_first_year_students_admitted_in_the_year": 1577,
+          "academic_year_2": 2019,
+          "no_of_students_graduating_in_minimum_stipulated_time": 1309,
+          "no_of_students_placed": 4,
+          "median_salary_of_placed_graduates_amount_in_rs": 275000,
+          "no_of_students_selected_for_higher_studies": 319
+        },
+        {
+          "academic_year": 2018,
+          "no_of_first_year_students_intake_in_the_year": 1611,
+          "no_of_first_year_students_admitted_in_the_year": 1514,
+          "academic_year_2": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 1383,
+          "no_of_students_placed": 32,
+          "median_salary_of_placed_graduates_amount_in_rs": 317000,
+          "no_of_students_selected_for_higher_studies": 538
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 1,
+      "headers": [
+        "2015_16",
+        "77",
+        "64",
+        "2016_17",
+        "0",
+        "2018_19",
+        "47",
+        "21",
+        "180000_one_lakh_eighty_thousand_only",
+        "15"
+      ],
+      "data": [
+        {
+          "2015_16": 2016,
+          "77": 70,
+          "64": 63,
+          "2016_17": 2017,
+          "0": 0,
+          "2018_19": 2019,
+          "47": 59,
+          "21": 18,
+          "180000_one_lakh_eighty_thousand_only": 180000,
+          "15": 9
+        },
+        {
+          "2015_16": 2017,
+          "77": 80,
+          "64": 64,
+          "2016_17": 2018,
+          "0": 0,
+          "2018_19": 2020,
+          "47": 42,
+          "21": 15,
+          "180000_one_lakh_eighty_thousand_only": 216000,
+          "15": 5
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 2,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2017,
+          "no_of_first_year_students_intake_in_the_year": 411,
+          "no_of_first_year_students_admitted_in_the_year": 352,
+          "academic_year_2": 2018,
+          "no_of_students_graduating_in_minimum_stipulated_time": 321,
+          "no_of_students_placed": 129,
+          "median_salary_of_placed_graduates_amount_in_rs": 230000,
+          "no_of_students_selected_for_higher_studies": 37
+        },
+        {
+          "academic_year": 2018,
+          "no_of_first_year_students_intake_in_the_year": 379,
+          "no_of_first_year_students_admitted_in_the_year": 314,
+          "academic_year_2": 2019,
+          "no_of_students_graduating_in_minimum_stipulated_time": 285,
+          "no_of_students_placed": 67,
+          "median_salary_of_placed_graduates_amount_in_rs": 333333,
+          "no_of_students_selected_for_higher_studies": 33
+        },
+        {
+          "academic_year": 2019,
+          "no_of_first_year_students_intake_in_the_year": 361,
+          "no_of_first_year_students_admitted_in_the_year": 388,
+          "academic_year_2": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 367,
+          "no_of_students_placed": 123,
+          "median_salary_of_placed_graduates_amount_in_rs": 363000,
+          "no_of_students_selected_for_higher_studies": 44
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 3,
+      "headers": [
+        "financial_year",
+        "2020_21_utilised_amount",
+        "2019_20_utilised_amount",
+        "2018_19_utilised_amount"
+      ],
+      "data": [
+        {
+          "financial_year": "Annual Capital Expenditure on Academic Activities and Resources (excluding expenditure on buildings)",
+          "2020_21_utilised_amount": null,
+          "2019_20_utilised_amount": null,
+          "2018_19_utilised_amount": null
+        },
+        {
+          "financial_year": "Library",
+          "2020_21_utilised_amount": 1962530,
+          "2019_20_utilised_amount": 2813653,
+          "2018_19_utilised_amount": 2789729
+        },
+        {
+          "financial_year": "New Equipment for Laboratories",
+          "2020_21_utilised_amount": 2426145,
+          "2019_20_utilised_amount": 6896723,
+          "2018_19_utilised_amount": 1599099
+        },
+        {
+          "financial_year": "Other expenditure on creation of Capital Assets (excluding expenditure on Land and Building)",
+          "2020_21_utilised_amount": 16267950,
+          "2019_20_utilised_amount": 15333278,
+          "2018_19_utilised_amount": 5118989
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 4,
+      "headers": [
+        "financial_year",
+        "2020_21_utilised_amount",
+        "2019_20_utilised_amount",
+        "2018_19_utilised_amount"
+      ],
+      "data": [
+        {
+          "financial_year": "Annual Operational Expenditure",
+          "2020_21_utilised_amount": null,
+          "2019_20_utilised_amount": null,
+          "2018_19_utilised_amount": null
+        },
+        {
+          "financial_year": "Salaries (Teaching and Non Teaching staff)",
+          "2020_21_utilised_amount": 264781162,
+          "2019_20_utilised_amount": 263849179,
+          "2018_19_utilised_amount": 220896137
+        },
+        {
+          "financial_year": "Maintenance of Academic Infrastructure or consumables and other running expenditures(excluding maintenance of hostels and allied services,rent of the building, depreciation cost, etc)",
+          "2020_21_utilised_amount": 23122031,
+          "2019_20_utilised_amount": 17728245,
+          "2018_19_utilised_amount": 17523288
+        },
+        {
+          "financial_year": "Seminars/Conferences/Workshops",
+          "2020_21_utilised_amount": 3704254,
+          "2019_20_utilised_amount": 3549810,
+          "2018_19_utilised_amount": 3101847
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "index": 1,
+      "headers": [
+        "1_do_your_institution_buildings_have_lifts_ramps_2_do_your_institution_have_provision_for_walking_aids_including_wheelchairs_and_transportation_from_one_building_to_another_for_handicapped_students",
+        "yes_more_than_80_of_the_buildings_yes"
+      ],
+      "data": [
+        {
+          "1_do_your_institution_buildings_have_lifts_ramps_2_do_your_institution_have_provision_for_walking_aids_including_wheelchairs_and_transportation_from_one_building_to_another_for_handicapped_students": 3.0,
+          "yes_more_than_80_of_the_buildings_yes": "Yes, more than 80% of the buildings"
+        }
+      ]
+    }
+  ]
+}

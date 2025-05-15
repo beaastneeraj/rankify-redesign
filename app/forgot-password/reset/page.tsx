@@ -227,7 +227,7 @@ export default function ResetPasswordPage() {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={loading || (confirmPassword && password !== confirmPassword)}
+                  disabled={loading || (confirmPassword !== "" && password !== confirmPassword)}
                 >
                   {loading ? (
                     <div className="flex items-center">
