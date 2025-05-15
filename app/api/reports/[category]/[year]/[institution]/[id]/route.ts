@@ -4,6 +4,11 @@ import fs from "fs/promises";
 import connectDB from "@/lib/mongodb";
 import Ranking from "@/models/Ranking";
 
+// Helper function to capitalize the first letter of a string
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export async function GET(
   req: NextRequest,
   context: {
@@ -23,7 +28,8 @@ export async function GET(
 
   // Step 1: Try to fetch the static JSON report from S3
   const bucketBaseUrl = "https://nsutai.s3.ap-south-1.amazonaws.com/data";
-  const s3FileUrl = `${bucketBaseUrl}/nirf_${year}_${category}_json/${institution}.json`;
+  const s3FileUrl = `${bucketBaseUrl}/nirf_${year}_${capitalize(category)}_json/${institution}.json`;
+  console.log("S3 File URL:", s3FileUrl);
 
   let reportData = null;
 
