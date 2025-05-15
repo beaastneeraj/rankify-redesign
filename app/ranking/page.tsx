@@ -419,11 +419,11 @@ export default function RankingPage() {
                     </TableHeader>
                     <TableBody>
                       {filteredInstitutions.map((inst) => (
-                        <TableRow key={inst.id} className="group">
+                        <TableRow key={inst.id || inst.insId || `${inst.name}-${inst.rank}`} className="group">
                           <TableCell className="font-medium">{inst.rank}</TableCell>
                           <TableCell>
                             <Link
-                              href={`/institution/${inst.id}`}
+                              href={`/institution/${category}/${year}/${inst.insId}/${inst._id}`}
                               className="text-foreground hover:text-primary transition-colors"
                             >
                               {inst.name}
@@ -442,7 +442,7 @@ export default function RankingPage() {
                                     className="h-8 w-8 opacity-70 group-hover:opacity-100"
                                     asChild
                                   >
-                                    <a href={inst.reportUrl} target="_blank" rel="noopener noreferrer">
+                                    <a href={inst.pdf} target="_blank" rel="noopener noreferrer">
                                       <FileText className="h-4 w-4" />
                                     </a>
                                   </Button>

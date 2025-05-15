@@ -1,0 +1,773 @@
+{
+  "tables": [
+    {
+      "page": 1,
+      "index": 1,
+      "headers": [
+        "academic_year",
+        "2022_23",
+        "2021_22",
+        "2020_21",
+        "2019_20",
+        "2018_19",
+        "2017_18"
+      ],
+      "data": [
+        {
+          "academic_year": 3,
+          "2022_23": 464,
+          "2021_22": 220,
+          "2020_21": 220,
+          "2019_20": null,
+          "2018_19": null,
+          "2017_18": null
+        },
+        {
+          "academic_year": 4,
+          "2022_23": 180,
+          "2021_22": 70,
+          "2020_21": 0,
+          "2019_20": 0,
+          "2018_19": null,
+          "2017_18": null
+        },
+        {
+          "academic_year": 1,
+          "2022_23": 30,
+          "2021_22": null,
+          "2020_21": null,
+          "2019_20": null,
+          "2018_19": null,
+          "2017_18": null
+        },
+        {
+          "academic_year": 2,
+          "2022_23": 3069,
+          "2021_22": 2810,
+          "2020_21": null,
+          "2019_20": null,
+          "2018_19": null,
+          "2017_18": null
+        },
+        {
+          "academic_year": 3,
+          "2022_23": 30,
+          "2021_22": 30,
+          "2020_21": 90,
+          "2019_20": null,
+          "2018_19": null,
+          "2017_18": null
+        },
+        {
+          "academic_year": "PG-Integrated",
+          "2022_23": 125,
+          "2021_22": 50,
+          "2020_21": 50,
+          "2019_20": 50,
+          "2018_19": 50,
+          "2017_18": null
+        }
+      ]
+    },
+    {
+      "page": 1,
+      "index": 2,
+      "headers": [
+        "all_programs_of_all_years",
+        "no_of_male_students",
+        "no_of_female_students",
+        "total_students",
+        "within_state_including_male_female",
+        "outside_state_including_male_female",
+        "outside_country_including_male_female",
+        "economically_backward_including_male_female",
+        "socially_challenged_sc_st_obc_including_male_female",
+        "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government",
+        "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds",
+        "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies",
+        "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement"
+      ],
+      "data": [
+        {
+          "all_programs_of_all_years": 3,
+          "no_of_male_students": 492,
+          "no_of_female_students": 339,
+          "total_students": 831,
+          "within_state_including_male_female": 664,
+          "outside_state_including_male_female": 90,
+          "outside_country_including_male_female": 77,
+          "economically_backward_including_male_female": 38,
+          "socially_challenged_sc_st_obc_including_male_female": 294,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 332,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 0,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 0
+        },
+        {
+          "all_programs_of_all_years": 4,
+          "no_of_male_students": 108,
+          "no_of_female_students": 139,
+          "total_students": 247,
+          "within_state_including_male_female": 242,
+          "outside_state_including_male_female": 5,
+          "outside_country_including_male_female": 0,
+          "economically_backward_including_male_female": 27,
+          "socially_challenged_sc_st_obc_including_male_female": 120,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 147,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 0,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 0
+        },
+        {
+          "all_programs_of_all_years": 1,
+          "no_of_male_students": 12,
+          "no_of_female_students": 18,
+          "total_students": 30,
+          "within_state_including_male_female": 29,
+          "outside_state_including_male_female": 1,
+          "outside_country_including_male_female": 0,
+          "economically_backward_including_male_female": 1,
+          "socially_challenged_sc_st_obc_including_male_female": 13,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 14,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 0,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 0
+        },
+        {
+          "all_programs_of_all_years": 2,
+          "no_of_male_students": 2466,
+          "no_of_female_students": 2072,
+          "total_students": 4538,
+          "within_state_including_male_female": 3822,
+          "outside_state_including_male_female": 626,
+          "outside_country_including_male_female": 90,
+          "economically_backward_including_male_female": 354,
+          "socially_challenged_sc_st_obc_including_male_female": 2349,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 2703,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 0,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 0
+        },
+        {
+          "all_programs_of_all_years": 3,
+          "no_of_male_students": 45,
+          "no_of_female_students": 45,
+          "total_students": 90,
+          "within_state_including_male_female": 84,
+          "outside_state_including_male_female": 6,
+          "outside_country_including_male_female": 0,
+          "economically_backward_including_male_female": 14,
+          "socially_challenged_sc_st_obc_including_male_female": 60,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 74,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 0,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 0
+        },
+        {
+          "all_programs_of_all_years": "PG-Integrated",
+          "no_of_male_students": 114,
+          "no_of_female_students": 154,
+          "total_students": 268,
+          "within_state_including_male_female": 240,
+          "outside_state_including_male_female": 20,
+          "outside_country_including_male_female": 8,
+          "economically_backward_including_male_female": 19,
+          "socially_challenged_sc_st_obc_including_male_female": 138,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_state_and_central_government": 157,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_institution_funds": 0,
+          "no_of_students_receiving_full_tuition_fee_reimbursement_from_the_private_bodies": 0,
+          "no_of_students_who_are_not_receiving_full_tuition_fee_reimbursement": 0
+        }
+      ]
+    },
+    {
+      "page": 1,
+      "index": 3,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_admitted_through_lateral_entry",
+        "academic_year_3",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_per_annum_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2018,
+          "no_of_first_year_students_intake_in_the_year": 70,
+          "no_of_first_year_students_admitted_in_the_year": 65,
+          "academic_year_2": 2019,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 60,
+          "no_of_students_placed": 10,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 300000,
+          "no_of_students_selected_for_higher_studies": 5
+        },
+        {
+          "academic_year": 2019,
+          "no_of_first_year_students_intake_in_the_year": 194,
+          "no_of_first_year_students_admitted_in_the_year": 194,
+          "academic_year_2": 2020,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2021,
+          "no_of_students_graduating_in_minimum_stipulated_time": 161,
+          "no_of_students_placed": 54,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 450000,
+          "no_of_students_selected_for_higher_studies": 42
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 2,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_admitted_through_lateral_entry",
+        "academic_year_3",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_per_annum_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2017,
+          "no_of_first_year_students_intake_in_the_year": 0,
+          "no_of_first_year_students_admitted_in_the_year": 0,
+          "academic_year_2": 2018,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 0,
+          "no_of_students_placed": 0,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 0,
+          "no_of_students_selected_for_higher_studies": 0
+        },
+        {
+          "academic_year": 2018,
+          "no_of_first_year_students_intake_in_the_year": 0,
+          "no_of_first_year_students_admitted_in_the_year": 0,
+          "academic_year_2": 2019,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2021,
+          "no_of_students_graduating_in_minimum_stipulated_time": 0,
+          "no_of_students_placed": 0,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 0,
+          "no_of_students_selected_for_higher_studies": 0
+        },
+        {
+          "academic_year": 2019,
+          "no_of_first_year_students_intake_in_the_year": 0,
+          "no_of_first_year_students_admitted_in_the_year": 0,
+          "academic_year_2": 2020,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2022,
+          "no_of_students_graduating_in_minimum_stipulated_time": 0,
+          "no_of_students_placed": 0,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 0,
+          "no_of_students_selected_for_higher_studies": 0
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 3,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_per_annum_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2020,
+          "no_of_first_year_students_intake_in_the_year": 120,
+          "no_of_first_year_students_admitted_in_the_year": 120,
+          "academic_year_2": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 120,
+          "no_of_students_placed": 40,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 400000,
+          "no_of_students_selected_for_higher_studies": 2
+        },
+        {
+          "academic_year": 2021,
+          "no_of_first_year_students_intake_in_the_year": 120,
+          "no_of_first_year_students_admitted_in_the_year": 120,
+          "academic_year_2": 2021,
+          "no_of_students_graduating_in_minimum_stipulated_time": 47,
+          "no_of_students_placed": 5,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 250000,
+          "no_of_students_selected_for_higher_studies": 3
+        },
+        {
+          "academic_year": 2022,
+          "no_of_first_year_students_intake_in_the_year": 30,
+          "no_of_first_year_students_admitted_in_the_year": 27,
+          "academic_year_2": 2022,
+          "no_of_students_graduating_in_minimum_stipulated_time": 20,
+          "no_of_students_placed": 0,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 0,
+          "no_of_students_selected_for_higher_studies": 20
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 4,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_per_annum_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2019,
+          "no_of_first_year_students_intake_in_the_year": 2454,
+          "no_of_first_year_students_admitted_in_the_year": 2440,
+          "academic_year_2": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 2380,
+          "no_of_students_placed": 546,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 530000,
+          "no_of_students_selected_for_higher_studies": 129
+        },
+        {
+          "academic_year": 2020,
+          "no_of_first_year_students_intake_in_the_year": 2750,
+          "no_of_first_year_students_admitted_in_the_year": 2750,
+          "academic_year_2": 2021,
+          "no_of_students_graduating_in_minimum_stipulated_time": 2705,
+          "no_of_students_placed": 863,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 500000,
+          "no_of_students_selected_for_higher_studies": 169
+        },
+        {
+          "academic_year": 2021,
+          "no_of_first_year_students_intake_in_the_year": 2810,
+          "no_of_first_year_students_admitted_in_the_year": 2640,
+          "academic_year_2": 2022,
+          "no_of_students_graduating_in_minimum_stipulated_time": 1863,
+          "no_of_students_placed": 605,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 300000,
+          "no_of_students_selected_for_higher_studies": 102
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "index": 5,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_admitted_through_lateral_entry",
+        "academic_year_3",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_per_annum_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2018,
+          "no_of_first_year_students_intake_in_the_year": 90,
+          "no_of_first_year_students_admitted_in_the_year": 90,
+          "academic_year_2": 2019,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 86,
+          "no_of_students_placed": 32,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 510000,
+          "no_of_students_selected_for_higher_studies": 5
+        },
+        {
+          "academic_year": 2019,
+          "no_of_first_year_students_intake_in_the_year": 90,
+          "no_of_first_year_students_admitted_in_the_year": 90,
+          "academic_year_2": 2020,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2021,
+          "no_of_students_graduating_in_minimum_stipulated_time": 65,
+          "no_of_students_placed": 31,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 250000,
+          "no_of_students_selected_for_higher_studies": 2
+        },
+        {
+          "academic_year": 2020,
+          "no_of_first_year_students_intake_in_the_year": 90,
+          "no_of_first_year_students_admitted_in_the_year": 90,
+          "academic_year_2": 2021,
+          "no_of_students_admitted_through_lateral_entry": 0,
+          "academic_year_3": 2022,
+          "no_of_students_graduating_in_minimum_stipulated_time": 65,
+          "no_of_students_placed": 31,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 200000,
+          "no_of_students_selected_for_higher_studies": 2
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "index": 1,
+      "headers": [
+        "academic_year",
+        "no_of_first_year_students_intake_in_the_year",
+        "no_of_first_year_students_admitted_in_the_year",
+        "academic_year_2",
+        "no_of_students_graduating_in_minimum_stipulated_time",
+        "no_of_students_placed",
+        "median_salary_of_placed_graduates_per_annum_amount_in_rs",
+        "no_of_students_selected_for_higher_studies"
+      ],
+      "data": [
+        {
+          "academic_year": 2016,
+          "no_of_first_year_students_intake_in_the_year": 50,
+          "no_of_first_year_students_admitted_in_the_year": 50,
+          "academic_year_2": 2020,
+          "no_of_students_graduating_in_minimum_stipulated_time": 48,
+          "no_of_students_placed": 14,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 450000,
+          "no_of_students_selected_for_higher_studies": 9
+        },
+        {
+          "academic_year": 2017,
+          "no_of_first_year_students_intake_in_the_year": 50,
+          "no_of_first_year_students_admitted_in_the_year": 50,
+          "academic_year_2": 2021,
+          "no_of_students_graduating_in_minimum_stipulated_time": 40,
+          "no_of_students_placed": 9,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 450000,
+          "no_of_students_selected_for_higher_studies": 13
+        },
+        {
+          "academic_year": 2018,
+          "no_of_first_year_students_intake_in_the_year": 50,
+          "no_of_first_year_students_admitted_in_the_year": 50,
+          "academic_year_2": 2022,
+          "no_of_students_graduating_in_minimum_stipulated_time": 48,
+          "no_of_students_placed": 14,
+          "median_salary_of_placed_graduates_per_annum_amount_in_rs": 450000,
+          "no_of_students_selected_for_higher_studies": 9
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "index": 2,
+      "headers": [
+        "ph_d_student_pursuing_doctoral_program_till_2022_23",
+        "column",
+        "none_total_students",
+        "column_2"
+      ],
+      "data": [
+        {
+          "ph_d_student_pursuing_doctoral_program_till_2022_23": "Full Time",
+          "column": null,
+          "none_total_students": 1389,
+          "column_2": null
+        },
+        {
+          "ph_d_student_pursuing_doctoral_program_till_2022_23": "Part Time",
+          "column": null,
+          "none_total_students": 0,
+          "column_2": null
+        },
+        {
+          "ph_d_student_pursuing_doctoral_program_till_2022_23": "No. of Ph.D students graduated (including Integrated Ph.D)",
+          "column": null,
+          "none_total_students": null,
+          "column_2": null
+        },
+        {
+          "ph_d_student_pursuing_doctoral_program_till_2022_23": null,
+          "column": 2022,
+          "none_total_students": 2021,
+          "column_2": 2020
+        },
+        {
+          "ph_d_student_pursuing_doctoral_program_till_2022_23": "Full Time",
+          "column": 225,
+          "none_total_students": 478,
+          "column_2": 475
+        },
+        {
+          "ph_d_student_pursuing_doctoral_program_till_2022_23": "Part Time",
+          "column": 0,
+          "none_total_students": 0,
+          "column_2": 0
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "index": 3,
+      "headers": [
+        "financial_year",
+        "2022_23_utilised_amount",
+        "2021_22_utilised_amount",
+        "2020_21_utilised_amount"
+      ],
+      "data": [
+        {
+          "financial_year": "Annual Capital Expenditure on Academic Activities and Resources (excluding expenditure on buildings)",
+          "2022_23_utilised_amount": null,
+          "2021_22_utilised_amount": null,
+          "2020_21_utilised_amount": null
+        },
+        {
+          "financial_year": "Library",
+          "2022_23_utilised_amount": 15483337,
+          "2021_22_utilised_amount": 9535028,
+          "2020_21_utilised_amount": 14068738
+        },
+        {
+          "financial_year": "New Equipment for Laboratories",
+          "2022_23_utilised_amount": 47769484,
+          "2021_22_utilised_amount": 53917403,
+          "2020_21_utilised_amount": 75937872
+        },
+        {
+          "financial_year": "Engineering Workshops",
+          "2022_23_utilised_amount": 8451235,
+          "2021_22_utilised_amount": 10536287,
+          "2020_21_utilised_amount": 21459008
+        },
+        {
+          "financial_year": "Studios",
+          "2022_23_utilised_amount": 0,
+          "2021_22_utilised_amount": 0,
+          "2020_21_utilised_amount": 0
+        },
+        {
+          "financial_year": "Other expenditure on creation of Capital Assets (excluding expenditure on Land and Building)",
+          "2022_23_utilised_amount": 149195803,
+          "2021_22_utilised_amount": 118459793,
+          "2020_21_utilised_amount": 161165747
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "index": 4,
+      "headers": [
+        "financial_year",
+        "2022_23_utilised_amount",
+        "2021_22_utilised_amount",
+        "2020_21_utilised_amount"
+      ],
+      "data": [
+        {
+          "financial_year": "Annual Operational Expenditure",
+          "2022_23_utilised_amount": null,
+          "2021_22_utilised_amount": null,
+          "2020_21_utilised_amount": null
+        },
+        {
+          "financial_year": "Salaries (Teaching and Non Teaching staff)",
+          "2022_23_utilised_amount": 1419000336,
+          "2021_22_utilised_amount": 1364880183,
+          "2020_21_utilised_amount": 1280845650
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "index": 1,
+      "headers": [
+        "maintenance_of_academic_infrastructure_or_consumables_and_other_running_expenditures_excluding_maintenance_of_hostels_and_allied_services_rent_of_the_building_depreciation_cost_etc_seminars_conferences_workshops",
+        "1712012342_one_hundred_seventy_one_crore_twenty_lakh_twelve_thousand_three_hundred_forty_two_5421654_fifty_four_lakh_twenty_one_thousand_six_hundred_fifty_four",
+        "1182345720_one_hundred_eighteen_crore_twenty_three_lakh_forty_five_thousand_seven_hundred_twenty_3019504_thirty_lakh_nineteen_thousand_five_hundred_four",
+        "1417570065_one_hundred_forty_one_crore_seventy_five_lakh_seventy_thousand_sixty_five_6009643_sixty_lakh_nine_thousand_six_hundred_forty_three"
+      ],
+      "data": []
+    },
+    {
+      "page": 4,
+      "index": 2,
+      "headers": [
+        "financial_year",
+        "2022_23",
+        "2021_22",
+        "2020_21"
+      ],
+      "data": [
+        {
+          "financial_year": "Total no. of Sponsored Projects",
+          "2022_23": 70,
+          "2021_22": 60,
+          "2020_21": 95
+        },
+        {
+          "financial_year": "Total no. of Funding Agencies",
+          "2022_23": 24,
+          "2021_22": 15,
+          "2020_21": 20
+        },
+        {
+          "financial_year": "Total Amount Received (Amount in Rupees)",
+          "2022_23": 74580443,
+          "2021_22": 389095394,
+          "2020_21": 304996410
+        },
+        {
+          "financial_year": "Amount Received in Words",
+          "2022_23": "SEVEN CRORE FIFTY EIGHT LAKH FOUR HUNDRED FORTY THREE",
+          "2021_22": "THIRTY EIGHT CRORE NINETY LAKH NINETY FIVE THOUSAND THREE HUNDRED NINETY FOUR",
+          "2020_21": "Thirty Crore Forty Nine Lakh Ninety Six Thousand Four Hundred And Ten"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "index": 3,
+      "headers": [
+        "financial_year",
+        "2022_23",
+        "2021_22",
+        "2020_21"
+      ],
+      "data": [
+        {
+          "financial_year": "Total no. of Consultancy Projects",
+          "2022_23": 8,
+          "2021_22": 15,
+          "2020_21": 1
+        },
+        {
+          "financial_year": "Total no. of Client Organizations",
+          "2022_23": 8,
+          "2021_22": 15,
+          "2020_21": 1
+        },
+        {
+          "financial_year": "Total Amount Received (Amount in Rupees)",
+          "2022_23": 4307436,
+          "2021_22": 27434566,
+          "2020_21": 35448810
+        },
+        {
+          "financial_year": "Amount Received in Words",
+          "2022_23": "FOURTY THREE LAKH SEVEN THOUSAND FOUR HUNDRED THIRTY SIX",
+          "2021_22": "TWO CRORE SEVENTY FOUR LAKH THIRTY FOUR THOUSAND FIVE HUNDRED SIXTY SIX",
+          "2020_21": "THREE CRORE FIFTY FOUR LAKH FORTY EIGHTY THOUSAND EIGHT HUNDRED TEN"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "index": 4,
+      "headers": [
+        "financial_year",
+        "2022_23",
+        "2021_22",
+        "2020_21"
+      ],
+      "data": [
+        {
+          "financial_year": "Total no. of Executive Development Programs/ Management Development Programs",
+          "2022_23": 30,
+          "2021_22": 28,
+          "2020_21": 34
+        },
+        {
+          "financial_year": "Total no. of Participants",
+          "2022_23": 9999,
+          "2021_22": 9999,
+          "2020_21": 9999
+        },
+        {
+          "financial_year": "Total Annual Earnings (Amount in Rupees)(Excluding Lodging & Boarding Charges)",
+          "2022_23": 9473518,
+          "2021_22": 18024000,
+          "2020_21": 20737218
+        },
+        {
+          "financial_year": "Total Annual Earnings in Words",
+          "2022_23": "NINETY FOUR LAKH SEVENTY THREE THOUSAND FIVE HUNDRED EIGHTEEN",
+          "2021_22": "ONE CRORE EIGHTY LAKH TWENTY FOUR THOUSAND",
+          "2020_21": "TWO CRORE SEVEN LAKH THIRTY SEVEN THOUSAND TWO HUNDRED EIGHTEEN"
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "index": 5,
+      "headers": [
+        "1_do_your_institution_buildings_have_lifts_ramps_2_do_your_institution_have_provision_for_walking_aids_including_wheelchairs_and_transportation_from_one_building_to_another_for_handicapped_students",
+        "yes_more_than_80_of_the_buildings_yes"
+      ],
+      "data": [
+        {
+          "1_do_your_institution_buildings_have_lifts_ramps_2_do_your_institution_have_provision_for_walking_aids_including_wheelchairs_and_transportation_from_one_building_to_another_for_handicapped_students": 3.0,
+          "yes_more_than_80_of_the_buildings_yes": "Yes, more than 80% of the buildings"
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "index": 1,
+      "headers": [
+        "1_does_your_institute_have_a_valid_naac_accreditation_valid_from",
+        "none_valid_upto",
+        "yes",
+        "none_cgpa"
+      ],
+      "data": [
+        {
+          "1_does_your_institute_have_a_valid_naac_accreditation_valid_from": 22,
+          "none_valid_upto": 21,
+          "yes": null,
+          "none_cgpa": 3.6
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "index": 2,
+      "headers": [
+        "1_has_your_institution_implemented_multiple_entry_exit_in_your_institution_2_has_your_institution_been_teaching_courses_in_indian_languages",
+        "yes_yes"
+      ],
+      "data": [
+        {
+          "1_has_your_institution_implemented_multiple_entry_exit_in_your_institution_2_has_your_institution_been_teaching_courses_in_indian_languages": 3.0,
+          "yes_yes": "YES"
+        },
+        {
+          "1_has_your_institution_implemented_multiple_entry_exit_in_your_institution_2_has_your_institution_been_teaching_courses_in_indian_languages": 4.0,
+          "yes_yes": "YES"
+        },
+        {
+          "1_has_your_institution_implemented_multiple_entry_exit_in_your_institution_2_has_your_institution_been_teaching_courses_in_indian_languages": 5.0,
+          "yes_yes": "YES"
+        },
+        {
+          "1_has_your_institution_implemented_multiple_entry_exit_in_your_institution_2_has_your_institution_been_teaching_courses_in_indian_languages": "6.1. Has your institution taken initiative towards Clean Energy?",
+          "yes_yes": "YES"
+        },
+        {
+          "1_has_your_institution_implemented_multiple_entry_exit_in_your_institution_2_has_your_institution_been_teaching_courses_in_indian_languages": "6.2. Has your institution taken initiative towards Waste Management?",
+          "yes_yes": "YES"
+        }
+      ]
+    }
+  ]
+}

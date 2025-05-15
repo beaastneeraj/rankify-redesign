@@ -4,15 +4,24 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, User, ChevronDown, LogOut } from "lucide-react"
+import { useSession, signOut } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu"
 import { Logo } from "@/components/logo"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export function MainNav() {
   const pathname = usePathname()
+  const { data: session } = useSession()
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   const routes = [
@@ -30,6 +39,11 @@ export function MainNav() {
       href: "/ranking",
       label: "Rankings",
       active: pathname === "/ranking" || pathname.startsWith("/ranking/"),
+    },
+    {
+      href: "/methodology",
+      label: "Methodology",
+      active: pathname === "/methodology",
     },
     {
       href: "/documents",
@@ -80,6 +94,41 @@ export function MainNav() {
         ))}
       </nav>
       <div className="flex items-center space-x-2">
+        <div className="hidden md:flex items-center space-x-2">
+          {!session ? (
+            <>
+              <Button asChild variant="outline" size="sm" className="text-sm font-medium">
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild size="sm" className="text-sm font-medium bg-gradient-to-r from-primary to-secondary text-white">
+                <Link href="/signup">Sign Up</Link>
+              </Button>
+            </>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  <span className="text-sm font-medium">{session.user?.name || session.user?.email}</span>
+                  <ChevronDown className="h-4 w-4 opacity-50" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href="/parameters">My Parameters</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/account">Account Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()} className="text-red-500 focus:text-red-500">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </div>
         <ThemeToggle />
         <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
           <Menu className="h-5 w-5" />
@@ -118,6 +167,42 @@ export function MainNav() {
                   {route.label}
                 </Link>
               ))}
+              
+              <div className="flex flex-col gap-2 pt-4 border-t border-border">
+                {!session ? (
+                  <>
+                    <Button asChild variant="outline">
+                      <Link href="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+                    </Button>
+                    <Button asChild className="bg-gradient-to-r from-primary to-secondary text-white">
+                      <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>Sign Up</Link>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <div className="py-2 px-3 bg-muted rounded-md mb-2">
+                      <p className="text-sm text-muted-foreground">Signed in as</p>
+                      <p className="font-medium">{session.user?.name || session.user?.email}</p>
+                    </div>
+                    <Button asChild variant="outline">
+                      <Link href="/parameters" onClick={() => setMobileMenuOpen(false)}>My Parameters</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                      <Link href="/account" onClick={() => setMobileMenuOpen(false)}>Account Settings</Link>
+                    </Button>
+                    <Button 
+                      variant="destructive" 
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
+                  </>
+                )}
+              </div>
             </nav>
           </motion.div>
         </div>

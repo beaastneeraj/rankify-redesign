@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Download, RefreshCw, Info, Filter, ArrowRight, Search, FileText } from "lucide-react"
+import { Download, RefreshCw, Info, Filter, ArrowRight, Search, FileText, Save } from "lucide-react"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+import { toast } from "sonner"
+import { validateWeights } from "@/lib/parameter-utils"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,6 +18,8 @@ import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import ParameterSaveLoad from "@/components/parameter-save-load"
 
 import { CATEGORIES, YEARS, REGIONS, ALL_STATES, getRegionForState } from "@/lib/data-loader"
 import type { Institution } from "@/lib/data-loader"
@@ -45,14 +50,31 @@ const PARAM_DESCRIPTIONS = {
 }
 
 type InstitutionWithCalc = Institution & {
+  _id: string
   calculatedScore?: number
   newRank?: number
   originalRank?: number
   originalScore?: number
 }
 
+type WeightsConfig = {
+  tlr: number
+  rpp: number
+  go: number
+  oi: number
+  perc: number
+}
+
+type SavedPreset = {
+  name: string
+  weights: WeightsConfig
+  category?: string
+  year?: string
+}
+
 export default function ParametersPage() {
-  const [weights, setWeights] = useState({ ...DEFAULT_WEIGHTS })
+  const { data: session } = useSession()
+  const [weights, setWeights] = useState<WeightsConfig>({ ...DEFAULT_WEIGHTS })
   const [category, setCategory] = useState("overall")
   const [year, setYear] = useState("2024")
   const [region, setRegion] = useState("All")
@@ -64,11 +86,49 @@ export default function ParametersPage() {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
   const [compareMode, setCompareMode] = useState(false)
   const [selectedInstitutions, setSelectedInstitutions] = useState<string[]>([])
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [saveName, setSaveName] = useState("")
 
   // Calculate total weight
   const totalWeight = Object.values(weights).reduce((sum, weight) => sum + weight, 0)
 
   // Load institutions from API when category or year changes
+  // Load saved preset when user logs in
+  useEffect(() => {
+    const loadLastActivePreset = async () => {
+      if (session?.user) {
+        try {
+          const res = await fetch('/api/user-parameters/active')
+          const data = await res.json()
+          
+          if (data.success && data.data?.last_active_preset) {
+            // Get the active preset details
+            const presetRes = await fetch('/api/user-parameters')
+            const presetData = await presetRes.json()
+            
+            if (presetData.success && presetData.data?.saved_presets) {
+              const presetName = data.data.last_active_preset
+              const preset = presetData.data.saved_presets[presetName]
+              
+              if (preset) {
+                // Apply the preset
+                setWeights(preset.weights || preset)
+                if (preset.category) setCategory(preset.category)
+                if (preset.year) setYear(preset.year)
+                
+                toast.info(`Loaded your last used preset: "${presetName}"`)
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Failed to load active preset:", error)
+        }
+      }
+    }
+    
+    loadLastActivePreset()
+  }, [session])
+  
   useEffect(() => {
     const loadInstitutions = async () => {
       setLoading(true)
@@ -78,9 +138,11 @@ export default function ParametersPage() {
         // Add originalScore and originalRank for recalculation
         const data: InstitutionWithCalc[] = (json.data || []).map((inst: Institution, idx: number) => ({
           ...inst,
+          id: inst._id ?? inst.id ?? inst.insId ?? `${inst.name}-${idx}`,  // ensure key is always present
           originalScore: inst.score,
           originalRank: inst.rank,
         }))
+
         setInstitutions(data)
       } catch (e) {
         setInstitutions([])
@@ -110,138 +172,11 @@ export default function ParametersPage() {
       filtered = filtered.filter(
         (inst) =>
           inst.name.toLowerCase().includes(query) ||
-          inst.city.toLowerCase().includes(query) ||
-          inst.state.toLowerCase().includes(query),
+          inst.city?.toLowerCase().includes(query) ||
+          inst.state?.toLowerCase().includes(query),
       )
     }
 
-    setFilteredInstitutions(filtered)
-  }, [institutions, region, state, searchQuery])
-
-  // Handle weight change for a parameter
-  const handleWeightChange = (parameter: keyof typeof weights, value: number) => {
-    // Enforce min/max strictly
-    const { min, max } = PARAM_LIMITS[parameter]
-    const newValue = Math.max(min, Math.min(max, value))
-
-    // Calculate how much this parameter changed
-    const diff = newValue - weights[parameter]
-
-    // Create new weights object
-    const newWeights = { ...weights, [parameter]: newValue }
-
-    // If there's a change, adjust other weights proportionally
-    if (diff !== 0) {
-      // Get all other parameters
-      const otherParams = Object.keys(weights).filter((key) => key !== parameter) as Array<keyof typeof weights>
-
-      // Calculate total weight of other parameters
-      const otherTotal = otherParams.reduce((sum, key) => sum + newWeights[key], 0)
-
-      // Adjust other parameters proportionally
-      if (otherTotal > 0) {
-        otherParams.forEach((key) => {
-          // Calculate proportional adjustment
-          const proportion = newWeights[key] / otherTotal
-          newWeights[key] = Math.max(
-            PARAM_LIMITS[key].min,
-            Math.min(PARAM_LIMITS[key].max, Math.round(newWeights[key] - diff * proportion)),
-          )
-        })
-      }
-
-      // Ensure total is 100
-      const finalTotal = Object.values(newWeights).reduce((sum, w) => sum + w, 0)
-      if (finalTotal !== 100) {
-        // Adjust the largest parameter to make total exactly 100
-        const largestParam = Object.keys(newWeights).reduce((a, b) =>
-          newWeights[a as keyof typeof weights] > newWeights[b as keyof typeof weights] ? a : b,
-        ) as keyof typeof weights
-
-        newWeights[largestParam] += 100 - finalTotal
-      }
-    }
-
-    setWeights(newWeights)
-  }
-
-  // Reset to default weights and reload original rankings
-  const resetToDefault = async () => {
-    setWeights({ ...DEFAULT_WEIGHTS })
-    setLoading(true)
-    try {
-      const res = await fetch(`/api/rankings?category=${category}&year=${year}`)
-      const json = await res.json()
-      // Add originalScore and originalRank for recalculation
-      const data: InstitutionWithCalc[] = (json.data || []).map((inst: Institution, idx: number) => ({
-        ...inst,
-        originalScore: inst.score,
-        originalRank: inst.rank,
-        calculatedScore: undefined,
-        newRank: undefined,
-      }))
-      setInstitutions(data)
-    } catch (e) {
-      setInstitutions([])
-    }
-    setLoading(false)
-  }
-
-  // Update rankings based on parameters
-  const updateRankings = async () => {
-    setLoading(true)
-    try {
-      // Build query string for GET request
-      const params = new URLSearchParams({
-        year: String(year),
-        category,
-        state,
-        region,
-        tlr: String(weights.tlr),
-        rpp: String(weights.rpp),
-        go: String(weights.go),
-        oi: String(weights.oi),
-        perc: String(weights.perc),
-      })
-      const res = await fetch(`/api/rankings?${params.toString()}`)
-      const json = await res.json()
-      if (!json.success) throw new Error(json.message)
-      // Map API response to local state
-      const updatedInstitutions = (json.data || []).map((inst: any) => ({
-        ...inst,
-        id: inst._id || inst.id,
-        name: inst.name || inst.institution, // ensure name is always present
-        calculatedScore: typeof inst.calculatedScore === 'number' ? inst.calculatedScore : undefined,
-        newRank: typeof inst.calculatedRank === 'number' ? inst.calculatedRank : undefined,
-        originalScore: inst.score,
-        originalRank: inst.rank,
-      }))
-      setInstitutions(updatedInstitutions)
-    } catch (e: any) {
-      // Optionally show error toast
-      // toast.error(e.message || 'Failed to update rankings')
-    }
-    setLoading(false)
-  }
-
-  // Always update filteredInstitutions after institutions change (to reflect recalculated scores)
-  useEffect(() => {
-    let filtered = [...institutions]
-    if (region !== "All") {
-      filtered = filtered.filter((inst) => getRegionForState(inst.state) === region)
-    }
-    if (state !== "All") {
-      filtered = filtered.filter((inst) => inst.state === state)
-    }
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(
-        (inst) =>
-          inst.name.toLowerCase().includes(query) ||
-          inst.city.toLowerCase().includes(query) ||
-          inst.state.toLowerCase().includes(query),
-      )
-    }
     // Sort filteredInstitutions by newRank if present, else by rank
     filtered.sort((a, b) => {
       if (a.newRank && b.newRank) return a.newRank - b.newRank
@@ -282,8 +217,8 @@ export default function ParametersPage() {
         [
           inst.newRank || inst.rank,
           `"${inst.name}"`, // Quote institution name to handle commas
-          `"${inst.city}"`,
-          `"${inst.state}"`,
+          `"${inst.city || ''}"`,
+          `"${inst.state || ''}"`,
           inst.calculatedScore?.toFixed(2) || inst.score.toFixed(2),
           inst.originalRank || inst.rank,
           inst.originalScore?.toFixed(2) || inst.score.toFixed(2),
@@ -301,6 +236,133 @@ export default function ParametersPage() {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+  }
+
+  // Handle weight change for a parameter
+  const handleWeightChange = (parameter: keyof typeof weights, newValue: number) => {
+    // Enforce min/max strictly
+    const { min, max } = PARAM_LIMITS[parameter]
+    const value = Math.max(min, Math.min(max, newValue))
+
+    // Calculate how much this parameter changed
+    const diff = value - weights[parameter]
+
+    // Create new weights object
+    const newWeights = { ...weights, [parameter]: value }
+
+    // If there's a change, adjust other weights proportionally
+    if (diff !== 0) {
+      // Get all other parameters
+      const otherParams = Object.keys(weights).filter((key) => key !== parameter) as Array<keyof typeof weights>
+
+      // Calculate total weight of other parameters
+      const otherTotal = otherParams.reduce((sum, key) => sum + newWeights[key], 0)
+
+      // Adjust other parameters proportionally
+      if (otherTotal > 0) {
+        otherParams.forEach((key) => {
+          // Calculate proportional adjustment
+          const proportion = newWeights[key] / otherTotal
+          newWeights[key] = Math.max(
+            PARAM_LIMITS[key].min,
+            Math.min(PARAM_LIMITS[key].max, Math.round(newWeights[key] - diff * proportion)),
+          )
+        })
+      }
+
+      // Ensure total is 100
+      const finalTotal = Object.values(newWeights).reduce((sum, w) => sum + w, 0)
+      if (finalTotal !== 100) {
+        // Adjust the largest parameter to make total exactly 100
+        const largestParam = Object.keys(newWeights).reduce((a, b) =>
+          newWeights[a as keyof typeof weights] > newWeights[b as keyof typeof weights] ? a : b,
+        ) as keyof typeof weights
+
+        newWeights[largestParam] += 100 - finalTotal
+      }
+    }
+
+    setWeights(newWeights)
+  }
+
+  // Reset to default weights and reload original rankings
+  const resetToDefault = () => {
+    setWeights({ ...DEFAULT_WEIGHTS })
+  }
+
+  // Update rankings based on parameters
+  const updateRankings = async () => {
+    // Validate weights before updating
+    const validation = validateWeights(weights)
+    if (!validation.valid) {
+      toast.error(validation.message || "Parameter weights are invalid")
+      return
+    }
+    
+    setLoading(true)
+    try {
+      // Build query string for GET request
+      const params = new URLSearchParams({
+        year: String(year),
+        category,
+        state,
+        region,
+        tlr: String(weights.tlr),
+        rpp: String(weights.rpp),
+        go: String(weights.go),
+        oi: String(weights.oi),
+        perc: String(weights.perc),
+      })
+      const res = await fetch(`/api/rankings?${params.toString()}`)
+      const json = await res.json()
+      if (!json.success) throw new Error(json.message)
+      // Map API response to local state
+      const updatedInstitutions = (json.data || []).map((inst: any) => ({
+        ...inst,
+        id: inst._id || inst.id,
+        name: inst.name || inst.institution, // ensure name is always present
+        calculatedScore: typeof inst.calculatedScore === 'number' ? inst.calculatedScore : undefined,
+        newRank: typeof inst.newRank === 'number' ? inst.newRank : undefined,
+        originalScore: inst.score,
+        originalRank: inst.rank,
+      }))
+      setInstitutions(updatedInstitutions)
+      
+      // Show success message with parameter information
+      toast.success(
+        `Rankings updated successfully with your custom parameters: TLR ${weights.tlr}%, RPP ${weights.rpp}%, GO ${weights.go}%, OI ${weights.oi}%, Perception ${weights.perc}%`
+      )
+    } catch (e: any) {
+      toast.error(e.message || 'Failed to update rankings')
+    }
+    setLoading(false)
+  }
+
+  // Load saved preset
+  const handleLoadPreset = (preset: SavedPreset) => {
+    setWeights(preset.weights)
+    
+    // If the preset includes category/year, update those too
+    if (preset.category) setCategory(preset.category)
+    if (preset.year) setYear(preset.year)
+    
+    // Save the last active preset to user's profile
+    if (session?.user) {
+      fetch('/api/user-parameters/active', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ preset_name: preset.name })
+      }).catch(err => console.error("Failed to save active preset:", err));
+    }
+    
+    // Update rankings after loading preset
+    setTimeout(() => {
+      updateRankings();
+    }, 100);
+    
+    toast.success(`Loaded preset: ${preset.name}`)
   }
 
   return (
@@ -321,6 +383,7 @@ export default function ParametersPage() {
             ))}
           </TabsList>
         </Tabs>
+        
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
@@ -460,6 +523,16 @@ export default function ParametersPage() {
               <RefreshCw className="mr-2 h-4 w-4" />
               Reset to Default
             </Button>
+            
+            <div className="ml-auto">
+              <ParameterSaveLoad 
+                weights={weights}
+                category={category}
+                year={year}
+                onLoadPreset={handleLoadPreset}
+                disabled={totalWeight !== 100}
+              />
+            </div>
           </CardFooter>
         </Card>
 
@@ -598,30 +671,30 @@ export default function ParametersPage() {
                         <TableCell key={`${inst.id}-rank`}>{inst.originalRank || inst.rank}</TableCell>
                       ))}
                     </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">New Rank</TableCell>
-                      {selectedInstitutionsData.map((inst) => (
-                        <TableCell key={`${inst.id}-newrank`} className="font-bold text-primary">
-                          {inst.newRank || "-"}
-                        </TableCell>
-                      ))}
-                    </TableRow>
+                    {institutions[0]?.newRank && (
+                      <TableRow>
+                        <TableCell className="font-medium">New Rank</TableCell>
+                        {selectedInstitutionsData.map((inst) => (
+                          <TableCell key={`${inst.id}-newrank`}>{inst.newRank}</TableCell>
+                        ))}
+                      </TableRow>
+                    )}
                     <TableRow>
                       <TableCell className="font-medium">Original Score</TableCell>
                       {selectedInstitutionsData.map((inst) => (
                         <TableCell key={`${inst.id}-score`}>
-                          {inst.originalScore?.toFixed(2) || inst.score.toFixed(2)}
+                          {(inst.originalScore !== undefined ? inst.originalScore : inst.score).toFixed(2)}
                         </TableCell>
                       ))}
                     </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">New Score</TableCell>
-                      {selectedInstitutionsData.map((inst) => (
-                        <TableCell key={`${inst.id}-newscore`} className="font-bold text-primary">
-                          {inst.calculatedScore?.toFixed(2) || "-"}
-                        </TableCell>
-                      ))}
-                    </TableRow>
+                    {institutions[0]?.calculatedScore !== undefined && (
+                      <TableRow>
+                        <TableCell className="font-medium">New Score</TableCell>
+                        {selectedInstitutionsData.map((inst) => (
+                          <TableCell key={`${inst.id}-newscore`}>{inst.calculatedScore?.toFixed(2)}</TableCell>
+                        ))}
+                      </TableRow>
+                    )}
                     <TableRow>
                       <TableCell className="font-medium">City</TableCell>
                       {selectedInstitutionsData.map((inst) => (
@@ -722,7 +795,7 @@ export default function ParametersPage() {
                             {institutions[0]?.newRank && <TableCell>{inst.originalRank || inst.rank}</TableCell>}
                             <TableCell>
                               <Link
-                                href={`/institution/${inst.id}`}
+                                href={`/institution/${category}/${year}/${inst.insId}/${inst._id}`}
                                 className="text-foreground hover:text-primary transition-colors"
                               >
                                 {inst.name}
@@ -745,7 +818,7 @@ export default function ParametersPage() {
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                                      <a href={inst.reportUrl} target="_blank" rel="noopener noreferrer">
+                                      <a href={inst.pdf} target="_blank" rel="noopener noreferrer">
                                         <FileText className="h-4 w-4" />
                                       </a>
                                     </Button>

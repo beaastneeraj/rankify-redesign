@@ -32,10 +32,10 @@ const Footer = () => {
       title: "Rankings",
       links: [
         { name: "Latest Rankings", href: "/ranking/2024" },
+        { name: "Colleges", href: "/ranking/colleges" },
         { name: "Engineering", href: "/ranking/engineering" },
-        { name: "Medical", href: "/ranking/medical" },
-        { name: "Business", href: "/ranking/business" },
-        { name: "Arts & Science", href: "/ranking/arts-science" },
+        { name: "University", href: "/ranking/university" },
+        { name: "Overall", href: "/ranking/overall" },
       ],
     },
     {
@@ -47,7 +47,7 @@ const Footer = () => {
         { name: "FAQs", href: "/faqs" },
       ],
     },
-    {
+    { 
       title: "Company",
       links: [
         { name: "About Us", href: "/about" },

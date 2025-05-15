@@ -35,10 +35,23 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setSuccess(false)
 
-    // Simulate API call with a delay
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setSuccess(true)
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) {
+        setSuccess(true)
+        setForm({ name: "", email: "", subject: "", message: "" })
+      } else {
+        setSuccess(false)
+      }
+    } catch {
+      setSuccess(false)
+    }
     setLoading(false)
   }
 

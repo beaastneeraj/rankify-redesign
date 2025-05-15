@@ -46,14 +46,17 @@ export function getRegionForState(state: string): string | null {
 // Interface for institution data
 export interface Institution {
   id: string
+  _id: string // optional if used only during fetch
+  insId: string // optional if used only during fetch
   name: string
   city: string
   state: string
   score: number
   rank: number
   parameters: Record<string, number>
-  reportUrl?: string
+  pdf?: string
 }
+
 
 // Load rankings data for a specific category and year
 // This function should only be used in server-side (API route) code!
@@ -80,57 +83,57 @@ export async function getAvailableYears(): Promise<string[]> {
   return YEARS
 }
 
-// Mock data generator for demo purposes
-function getMockData(category: string, year: string): Institution[] {
-  // Generate different data based on category and year
-  const count = category === "overall" ? 100 : 50
+// // Mock data generator for demo purposes
+// function getMockData(category: string, year: string): Institution[] {
+//   // Generate different data based on category and year
+//   const count = category === "overall" ? 100 : 50
 
-  return Array.from({ length: count }, (_, i) => {
-    const rank = i + 1
-    const state = ALL_STATES[Math.floor(Math.random() * ALL_STATES.length)]
+//   return Array.from({ length: count }, (_, i) => {
+//     const rank = i + 1
+//     const state = ALL_STATES[Math.floor(Math.random() * ALL_STATES.length)]
 
-    // Generate different institution names based on category
-    let name = ""
-    let city = ""
+//     // Generate different institution names based on category
+//     let name = ""
+//     let city = ""
 
-    if (category === "engineering") {
-      name = `${["IIT", "NIT", "IIIT", "VIT", "BITS"][Math.floor(Math.random() * 5)]} ${["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore"][Math.floor(Math.random() * 5)]}`
-      city = name.split(" ")[1]
-    } else if (category === "university") {
-      name = `${state} ${["Central", "State", "National", "International"][Math.floor(Math.random() * 4)]} University`
-      city = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pune"][Math.floor(Math.random() * 7)]
-    } else if (category === "college") {
-      name = `${["St.", "Govt.", "City", "Modern", "Heritage"][Math.floor(Math.random() * 5)]} College of ${["Arts", "Science", "Commerce", "Technology"][Math.floor(Math.random() * 4)]}`
-      city = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pune"][Math.floor(Math.random() * 7)]
-    } else {
-      name = `Institution ${rank}`
-      city = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pune"][Math.floor(Math.random() * 7)]
-    }
+//     if (category === "engineering") {
+//       name = `${["IIT", "NIT", "IIIT", "VIT", "BITS"][Math.floor(Math.random() * 5)]} ${["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore"][Math.floor(Math.random() * 5)]}`
+//       city = name.split(" ")[1]
+//     } else if (category === "university") {
+//       name = `${state} ${["Central", "State", "National", "International"][Math.floor(Math.random() * 4)]} University`
+//       city = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pune"][Math.floor(Math.random() * 7)]
+//     } else if (category === "college") {
+//       name = `${["St.", "Govt.", "City", "Modern", "Heritage"][Math.floor(Math.random() * 5)]} College of ${["Arts", "Science", "Commerce", "Technology"][Math.floor(Math.random() * 4)]}`
+//       city = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pune"][Math.floor(Math.random() * 7)]
+//     } else {
+//       name = `Institution ${rank}`
+//       city = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pune"][Math.floor(Math.random() * 7)]
+//     }
 
-    // Base score decreases with rank
-    const baseScore = Math.max(30, 100 - rank * 0.7)
+//     // Base score decreases with rank
+//     const baseScore = Math.max(30, 100 - rank * 0.7)
 
-    // Add some randomness to the score
-    const score = Math.round((baseScore + (Math.random() * 5 - 2.5)) * 100) / 100
+//     // Add some randomness to the score
+//     const score = Math.round((baseScore + (Math.random() * 5 - 2.5)) * 100) / 100
 
-    // Generate parameter scores
-    const parameters: Record<string, number> = {
-      tlr: Math.round((80 + Math.random() * 20) * 10) / 10, // Teaching Learning Resources
-      rpp: Math.round((75 + Math.random() * 25) * 10) / 10, // Research & Professional Practice
-      go: Math.round((70 + Math.random() * 30) * 10) / 10, // Graduation Outcomes
-      oi: Math.round((65 + Math.random() * 35) * 10) / 10, // Outreach & Inclusivity
-      perc: Math.round((60 + Math.random() * 40) * 10) / 10, // Perception
-    }
+//     // Generate parameter scores
+//     const parameters: Record<string, number> = {
+//       tlr: Math.round((80 + Math.random() * 20) * 10) / 10, // Teaching Learning Resources
+//       rpp: Math.round((75 + Math.random() * 25) * 10) / 10, // Research & Professional Practice
+//       go: Math.round((70 + Math.random() * 30) * 10) / 10, // Graduation Outcomes
+//       oi: Math.round((65 + Math.random() * 35) * 10) / 10, // Outreach & Inclusivity
+//       perc: Math.round((60 + Math.random() * 40) * 10) / 10, // Perception
+//     }
 
-    return {
-      id: `${category}_${year}_${rank}`,
-      name,
-      city,
-      state,
-      score,
-      rank,
-      parameters,
-      reportUrl: getReportUrl(name, category, year),
-    }
-  })
-}
+//     return {
+//       id: `${category}_${year}_${rank}`,
+//       name,
+//       city,
+//       state,
+//       score,
+//       rank,
+//       parameters,
+//       reportUrl: getReportUrl(name, category, year),
+//     }
+//   })
+// }
