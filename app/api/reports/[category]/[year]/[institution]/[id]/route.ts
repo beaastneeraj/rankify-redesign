@@ -20,29 +20,24 @@ export async function GET(
   // ✅ Await the params — yes, this is needed in some deep dynamic routes
   const { category, year, institution, id } = await context.params;
 
-  // Step 1: Try to fetch the static JSON report
-  const folderName = `nirf_${year}_${category}_json`;
-  const filePath = path.join(
-    process.cwd(),
-    "app",
-    "api",
-    "reports",
-    "data",
-    folderName,
-    `${institution}.json`
-  );
+
+  // Step 1: Try to fetch the static JSON report from S3
+  const bucketBaseUrl = "https://nsutai.s3.ap-south-1.amazonaws.com/data";
+  const s3FileUrl = `${bucketBaseUrl}/nirf_${year}_${category}_json/${institution}.json`;
 
   let reportData = null;
 
   try {
-    const raw = await fs.readFile(filePath, "utf-8");
-    reportData = JSON.parse(raw);
+    const response = await fetch(s3FileUrl);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    reportData = await response.json();
   } catch (err) {
-    console.warn(`No file report for ${institution} found.`);
+    console.warn(`Could not fetch report from S3 for ${institution}:`, err);
   }
 
   // Step 2: Connect to DB and fetch from Mongo
   await connectDB();
+
 
   let mongoData = null;
 
