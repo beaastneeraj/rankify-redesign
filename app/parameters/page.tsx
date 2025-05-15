@@ -45,6 +45,7 @@ const PARAM_DESCRIPTIONS = {
 }
 
 type InstitutionWithCalc = Institution & {
+  _id: string
   calculatedScore?: number
   newRank?: number
   originalRank?: number
@@ -78,9 +79,11 @@ export default function ParametersPage() {
         // Add originalScore and originalRank for recalculation
         const data: InstitutionWithCalc[] = (json.data || []).map((inst: Institution, idx: number) => ({
           ...inst,
+          id: inst._id ?? inst.id ?? inst.insId ?? `${inst.name}-${idx}`,  // ensure key is always present
           originalScore: inst.score,
           originalRank: inst.rank,
         }))
+
         setInstitutions(data)
       } catch (e) {
         setInstitutions([])
@@ -212,7 +215,7 @@ export default function ParametersPage() {
         id: inst._id || inst.id,
         name: inst.name || inst.institution, // ensure name is always present
         calculatedScore: typeof inst.calculatedScore === 'number' ? inst.calculatedScore : undefined,
-        newRank: typeof inst.calculatedRank === 'number' ? inst.calculatedRank : undefined,
+        newRank: typeof inst.newRank === 'number' ? inst.newRank : undefined,
         originalScore: inst.score,
         originalRank: inst.rank,
       }))
@@ -290,6 +293,7 @@ export default function ParametersPage() {
         ].join(","),
       ),
     ].join("\n")
+
 
     // Create download link
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
@@ -722,7 +726,7 @@ export default function ParametersPage() {
                             {institutions[0]?.newRank && <TableCell>{inst.originalRank || inst.rank}</TableCell>}
                             <TableCell>
                               <Link
-                                href={`/institution/${inst.id}`}
+                                href={`/institution/${category}/${year}/${inst.insId}/${inst._id}`}
                                 className="text-foreground hover:text-primary transition-colors"
                               >
                                 {inst.name}
@@ -745,7 +749,7 @@ export default function ParametersPage() {
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-                                      <a href={inst.reportUrl} target="_blank" rel="noopener noreferrer">
+                                      <a href={inst.pdf} target="_blank" rel="noopener noreferrer">
                                         <FileText className="h-4 w-4" />
                                       </a>
                                     </Button>

@@ -1,133 +1,151 @@
-import { type NextRequest, NextResponse } from "next/server"
-import connectDB from '@/lib/mongodb';
-import Ranking from '@/models/Ranking';
+import { type NextRequest, NextResponse } from "next/server";
+import connectDB from "@/lib/mongodb";
+import Ranking from "@/models/Ranking";
 
 const REGIONS = {
   North: [
-    'Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Punjab', 'Uttarakhand', 'Uttar Pradesh', 'Chandigarh', 'Ladakh'
+    "Delhi","Haryana","Himachal Pradesh","Jammu and Kashmir",
+    "Punjab","Uttarakhand","Uttar Pradesh","Chandigarh","Ladakh",
   ],
   South: [
-    'Andhra Pradesh', 'Karnataka', 'Kerala', 'Tamil Nadu', 'Telangana', 'Puducherry', 'Lakshadweep'
+    "Andhra Pradesh","Karnataka","Kerala","Tamil Nadu",
+    "Telangana","Puducherry","Lakshadweep",
   ],
   East: [
-    'Bihar', 'Jharkhand', 'Odisha', 'West Bengal', 'Andaman and Nicobar Islands'
+    "Bihar","Jharkhand","Odisha","West Bengal",
+    "Andaman and Nicobar Islands",
   ],
   West: [
-    'Goa', 'Gujarat', 'Maharashtra', 'Rajasthan', 'Dadra and Nagar Haveli', 'Daman and Diu'
+    "Goa","Gujarat","Maharashtra","Rajasthan",
+    "Dadra and Nagar Haveli","Daman and Diu",
   ],
-  Central: [
-    'Chhattisgarh', 'Madhya Pradesh'
-  ],
+  Central: ["Chhattisgarh","Madhya Pradesh"],
   Northeast: [
-    'Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura'
-  ]
-};
+    "Arunachal Pradesh","Assam","Manipur","Meghalaya",
+    "Mizoram","Nagaland","Sikkim","Tripura",
+  ],
+} as const;
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  const year = Number(searchParams.get('year'));
-  const category = searchParams.get('category')?.toLowerCase();
-  const state = searchParams.get('state');
-  const region = searchParams.get('region');
-  const tlr = Number(searchParams.get('tlr')) || null;
-  const rpp = Number(searchParams.get('rpp')) || null;
-  const go = Number(searchParams.get('go')) || null;
-  const oi = Number(searchParams.get('oi')) || null;
-  const perc = Number(searchParams.get('perc')) || null;
-
+  const p = request.nextUrl.searchParams;
+  const year      = Number(p.get("year"));
+  const category  = p.get("category")?.toLowerCase() ?? "";
   if (!year || !category) {
-    return NextResponse.json({
-      success: false,
-      message: 'Year and category are required',
-      data: null
-    });
+    return NextResponse.json(
+      { success: false, message: "year and category are required", data: null },
+      { status: 400 },
+    );
   }
+
+  const state  = p.get("state");
+  const region = p.get("region");
+
+  // weight params (accept rpc|rpp, pr|perc)
+  const tlrP = p.get("tlr");
+  const rpcP = p.get("rpc") ?? p.get("rpp");
+  const goP  = p.get("go");
+  const oiP  = p.get("oi");
+  const prP  = p.get("pr")  ?? p.get("perc");
+
+  const tlrW = tlrP ? Number(tlrP) : 0;
+  const rpcW = rpcP ? Number(rpcP) : 0;
+  const goW  = goP  ? Number(goP)  : 0;
+  const oiW  = oiP  ? Number(oiP)  : 0;
+  const prW  = prP  ? Number(prP)  : 0;
+
+  const isCustom = tlrP && rpcP && goP && oiP && prP;
 
   await connectDB();
 
-  // Build query
-  const query: any = { year, };
-  if (category === 'engineering' || category === 'eng') {
-    query.category = { $in: ['engineering', 'eng'] };
-  } else {
-    query.category = category;
-  }
-  if (region && region !== 'All' && REGIONS[region as keyof typeof REGIONS]) {
+  // build Mongo query
+  const query: any = { year };
+  query.category =
+    category === "engineering" || category === "eng"
+      ? { $in: ["engineering","eng"] }
+      : category;
+
+  if (region && region !== "All" && REGIONS[region as keyof typeof REGIONS]) {
     query.state = { $in: REGIONS[region as keyof typeof REGIONS] };
-  } else if (state && state !== 'All') {
+  } else if (state && state !== "All") {
     query.state = state;
   }
 
-  // Fetch all matching institutions
-  const institutions = await Ranking.find(query);
-  if (!institutions.length) {
-    return NextResponse.json({
-      success: false,
-      message: 'No institutions found for the given criteria',
-      data: null
-    }, { status: 404 });
+  const docs = await Ranking.find(query);
+  if (!docs.length) {
+    return NextResponse.json(
+      { success: false, message: "No institutions found", data: null },
+      { status: 404 },
+    );
   }
 
-  // If parameter weights are provided, recalculate scores
-  if (tlr !== null && rpp !== null && go !== null && oi !== null && perc !== null) {
-    const totalWeight = tlr + rpp + go + oi + perc;
-    let updatedInstitutions = institutions.map((inst: any) => {
-      const tlrScore = Number(inst.TLR) || 0;
-      const rpScore = Number(inst.RP) || 0;
-      const goScore = Number(inst.GO) || 0;
-      const oiScore = Number(inst.OI) || 0;
-      const prScore = Number(inst.PR) || 0;
-      const newScore = (
-        (tlrScore * (tlr / totalWeight)) +
-        (rpScore * (rpp / totalWeight)) +
-        (goScore * (go / totalWeight)) +
-        (oiScore * (oi / totalWeight)) +
-        (prScore * (perc / totalWeight))
-      );
-      const calculatedScore = Number.isFinite(newScore) ? Number(newScore.toFixed(2)) : Number(inst.score) || 0;
+  /* ---------- custom weighting --------------------------------------- */
+  if (isCustom) {
+    const total = tlrW + rpcW + goW + oiW + prW;
+
+    const scored = docs.map((d: any) => {
+      const tlr = Number(d.TLR) || 0;
+      const rpc = Number(d.RPC) || 0;
+      const go  = Number(d.GO)  || 0;
+      const oi  = Number(d.OI)  || 0;
+      const pr  = Number(d.PR)  || 0;
+
+      const w =
+        (tlr * tlrW/total) +
+        (rpc * rpcW/total) +
+        (go  * goW /total) +
+        (oi  * oiW /total) +
+        (pr  * prW /total);
+
       return {
-        _id: inst._id,
-        name: inst.name || inst.institution,
-        institution: inst.name || inst.institution,
-        city: inst.city || '',
-        state: inst.state || '',
-        score: Number(inst.score) || 0,
-        rank: Number(inst.rank) || 0,
-        calculatedScore
+        _id: d._id,
+        id:  d._id.toString(),
+        insId: d.insId,
+        name:  d.name,
+        city:  d.city,
+        state: d.state,
+        rank:  d.rank,
+        score: Number(d.score) || 0,       // original
+        calculatedScore: Number(w.toFixed(2)),
+        pdf: d.pdf,
+        img: d.img,
+        newRank: 0
       };
     });
-    updatedInstitutions.sort((a: any, b: any) => b.calculatedScore - a.calculatedScore);
-    updatedInstitutions = updatedInstitutions.map((inst: any, index: number) => ({
-      ...inst,
-      calculatedRank: index + 1
-    }));
+
+    scored.sort((a,b) => b.calculatedScore - a.calculatedScore);
+    scored.forEach((d,i) => (d.newRank = i + 1));
+
     return NextResponse.json({
       success: true,
-      message: 'Parameters applied successfully',
-      data: updatedInstitutions
+      message: "parameters applied successfully",
+      data: scored,
     });
   }
 
-  // Map the institutions to ensure consistent field names
-  const mappedInstitutions = institutions.map((inst: any) => ({
-    id: inst._id.toString(),
-    institution: inst.name || inst.institution,
-    name: inst.name || inst.institution,
-    city: inst.city,
-    state: inst.state,
-    rank: inst.rank,
-    score: inst.score,
-    TLR: inst.TLR || 0,
-    RP: inst.RP || 0,
-    GO: inst.GO || 0,
-    OI: inst.OI || 0,
-    PR: inst.PR || 0,
-    year: inst.year,
-    category: inst.category
+  /* ---------- default (raw) ------------------------------------------ */
+  const mapped = docs.map((d: any) => ({
+    _id: d._id,
+    id:  d._id.toString(),
+    insId: d.insId,
+    name:  d.name,
+    city:  d.city,
+    state: d.state,
+    rank:  d.rank,
+    score: d.score,
+    TLR:   d.TLR,
+    RPC:   d.RPC,
+    GO:    d.GO,
+    OI:    d.OI,
+    PR:    d.PR,
+    pdf:   d.pdf,
+    img:   d.img,
+    year:  d.year,
+    category: d.category,
   }));
+
   return NextResponse.json({
     success: true,
-    message: 'Rankings retrieved successfully',
-    data: mappedInstitutions
+    message: "rankings retrieved",
+    data: mapped,
   });
 }
