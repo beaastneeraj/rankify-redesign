@@ -9,6 +9,7 @@ import { motion } from "framer-motion"
 import { Eye, EyeOff, ArrowRight, Mail, Lock, User, Check } from "lucide-react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub, FaApple } from "react-icons/fa"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -41,9 +42,6 @@ export default function SignupPage() {
     }
 
     try {
-      // Simulate API call with a delay
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
       const res = await fetch("/api/signup", {
         method: "POST",
         headers: {
@@ -53,10 +51,18 @@ export default function SignupPage() {
       })
 
       if (res.ok) {
-        setSuccess(true)
-        setTimeout(() => {
-          router.push("/login")
-        }, 2000)
+        // Auto-login after signup
+        const loginRes = await signIn("credentials", {
+          redirect: false,
+          email,
+          password,
+        })
+        if (loginRes?.ok) {
+          router.push("/")
+        } else {
+          setSuccess(true)
+          setTimeout(() => router.push("/login"), 2000)
+        }
       } else {
         const errorData = await res.json()
         setError(`${errorData.message || "Signup failed. Try a different email."}`)
@@ -274,7 +280,7 @@ export default function SignupPage() {
                 <Button
                   type="submit"
                   className="w-full"
-                  disabled={loading || (confirmPassword && password !== confirmPassword)}
+                  disabled={loading || (!!confirmPassword && password !== confirmPassword)}
                 >
                   {loading ? (
                     <div className="flex items-center">

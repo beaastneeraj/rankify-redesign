@@ -9,6 +9,7 @@ import { motion } from "framer-motion"
 import { Eye, EyeOff, ArrowRight, Mail, Lock } from "lucide-react"
 import { FcGoogle } from "react-icons/fc"
 import { FaGithub, FaApple } from "react-icons/fa"
+import { signIn } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -29,27 +30,18 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-
     try {
-      // Simulate API call with a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
       })
-
-      if (res.ok) {
-        router.push("/") // Redirect to home
+      if (res?.ok) {
+        router.push("/")
       } else {
-        const errorData = await res.json()
-        setError(`${errorData.message || "Invalid credentials"}`)
+        setError(res?.error || "Invalid credentials")
       }
     } catch (err) {
-      console.error(err)
       setError("Something went wrong. Please try again.")
     } finally {
       setLoading(false)

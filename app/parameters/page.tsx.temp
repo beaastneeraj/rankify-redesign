@@ -6,7 +6,6 @@ import { Download, RefreshCw, Info, Filter, ArrowRight, Search, FileText, Save }
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
-import { validateWeights } from "@/lib/parameter-utils"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -93,42 +92,6 @@ export default function ParametersPage() {
   const totalWeight = Object.values(weights).reduce((sum, weight) => sum + weight, 0)
 
   // Load institutions from API when category or year changes
-  // Load saved preset when user logs in
-  useEffect(() => {
-    const loadLastActivePreset = async () => {
-      if (session?.user) {
-        try {
-          const res = await fetch('/api/user-parameters/active')
-          const data = await res.json()
-          
-          if (data.success && data.data?.last_active_preset) {
-            // Get the active preset details
-            const presetRes = await fetch('/api/user-parameters')
-            const presetData = await presetRes.json()
-            
-            if (presetData.success && presetData.data?.saved_presets) {
-              const presetName = data.data.last_active_preset
-              const preset = presetData.data.saved_presets[presetName]
-              
-              if (preset) {
-                // Apply the preset
-                setWeights(preset.weights || preset)
-                if (preset.category) setCategory(preset.category)
-                if (preset.year) setYear(preset.year)
-                
-                toast.info(`Loaded your last used preset: "${presetName}"`)
-              }
-            }
-          }
-        } catch (error) {
-          console.error("Failed to load active preset:", error)
-        }
-      }
-    }
-    
-    loadLastActivePreset()
-  }, [session])
-  
   useEffect(() => {
     const loadInstitutions = async () => {
       setLoading(true)
@@ -292,13 +255,6 @@ export default function ParametersPage() {
 
   // Update rankings based on parameters
   const updateRankings = async () => {
-    // Validate weights before updating
-    const validation = validateWeights(weights)
-    if (!validation.valid) {
-      toast.error(validation.message || "Parameter weights are invalid")
-      return
-    }
-    
     setLoading(true)
     try {
       // Build query string for GET request
@@ -327,11 +283,6 @@ export default function ParametersPage() {
         originalRank: inst.rank,
       }))
       setInstitutions(updatedInstitutions)
-      
-      // Show success message with parameter information
-      toast.success(
-        `Rankings updated successfully with your custom parameters: TLR ${weights.tlr}%, RPP ${weights.rpp}%, GO ${weights.go}%, OI ${weights.oi}%, Perception ${weights.perc}%`
-      )
     } catch (e: any) {
       toast.error(e.message || 'Failed to update rankings')
     }
@@ -345,22 +296,6 @@ export default function ParametersPage() {
     // If the preset includes category/year, update those too
     if (preset.category) setCategory(preset.category)
     if (preset.year) setYear(preset.year)
-    
-    // Save the last active preset to user's profile
-    if (session?.user) {
-      fetch('/api/user-parameters/active', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ preset_name: preset.name })
-      }).catch(err => console.error("Failed to save active preset:", err));
-    }
-    
-    // Update rankings after loading preset
-    setTimeout(() => {
-      updateRankings();
-    }, 100);
     
     toast.success(`Loaded preset: ${preset.name}`)
   }
@@ -524,15 +459,17 @@ export default function ParametersPage() {
               Reset to Default
             </Button>
             
-            <div className="ml-auto">
-              <ParameterSaveLoad 
-                weights={weights}
-                category={category}
-                year={year}
-                onLoadPreset={handleLoadPreset}
-                disabled={totalWeight !== 100}
-              />
-            </div>
+            {session && (
+              <div className="ml-auto">
+                <ParameterSaveLoad 
+                  weights={weights}
+                  category={category}
+                  year={year}
+                  onLoadPreset={handleLoadPreset}
+                  disabled={totalWeight !== 100}
+                />
+              </div>
+            )}
           </CardFooter>
         </Card>
 
